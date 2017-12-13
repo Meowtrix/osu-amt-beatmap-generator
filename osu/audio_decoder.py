@@ -1,19 +1,37 @@
-'''Audio decoder implemented with BASS dll.'''
-from typing import io
+"""
+Audio decoder implemented with BASS dll.
+"""
+
 import ctypes
 import ctypes.util
+from typing import io
+
 import numpy
 
 BASS = ctypes.cdll.LoadLibrary(ctypes.util.find_library('bass'))
 
 
 class AudioProcessError(Exception):
-    '''Error occurred during audio processing.'''
+    """
+    Error occurred during audio processing.
+    """
+    
     pass
 
 
 def decode_audio(audio_file: io):
-    '''Decode audio from file-like object `audio_file'.'''
+    """
+    Decode audio from file-like object `audio_file'.
+    
+    Parameters
+    ----------
+    audio_file
+
+    Returns
+    -------
+
+    """
+    
     data = audio_file.read()
     if not BASS.BASS_Init(0):
         raise AudioProcessError('BASS Error: Initialization failed.')
