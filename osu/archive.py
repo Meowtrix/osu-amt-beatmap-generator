@@ -67,9 +67,8 @@ class OszArchive(Archive):
     """
     
     def __init__(self, oszfile):
-        super(OszArchive, self).__init__()
-        self.oszfile = oszfile if isinstance(
-            oszfile, ZipFile) else ZipFile(oszfile)
+        super().__init__()
+        self.oszfile = oszfile if isinstance(oszfile, ZipFile) else ZipFile(oszfile)
     
     def __open_content(self, filename: str, mode: str = "r") -> io:
         return self.oszfile.open(filename, mode)
@@ -87,7 +86,7 @@ class DirArchive(Archive):
     """
     
     def __init__(self, path: str):
-        super(DirArchive, self).__init__()
+        super().__init__()
         assert os.path.isdir(path)
         self.path = path
     
