@@ -2,7 +2,7 @@
 from typing import io, Callable
 import numpy
 
-class Beatmap(object):
+class Beatmap:
     '''Parsed beatmap information for an osu! beatmap.'''
 
     def __init__(self, beatmap_file: io, audio_provider: Callable[[str], numpy.ndarray]):

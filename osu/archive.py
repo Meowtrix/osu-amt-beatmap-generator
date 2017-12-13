@@ -7,7 +7,7 @@ from osu.audio_decoder import decode_audio
 import numpy
 
 
-class Archive(object):
+class Archive:
     '''Abstract base for osu! beatmap archives.'''
 
     def __init__(self):
