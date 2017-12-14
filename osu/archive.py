@@ -40,13 +40,13 @@ class Archive:
                 self.audios[filename] = decode_audio(audio_file)
         return self.audios[filename]
     
-    def __open_content(self, filename: str, mode: str = "r") -> io:
+    def __open_content(self, filename: str, mode: str = 'r') -> io:
         raise NotImplementedError(
-            'Abstract base class "Archive" does not provide an implementation for this.')
+            "Abstract base class 'Archive' does not provide an implementation for this.")
     
     def __list_content(self) -> Iterable[str]:
         raise NotImplementedError(
-            'Abstract base class "Archive" does not provide an implementation for this.')
+            "Abstract base class 'Archive' does not provide an implementation for this.")
     
     def __iter__(self):
         for filename in self.__list_content():
@@ -70,7 +70,7 @@ class OszArchive(Archive):
         super().__init__()
         self.oszfile = oszfile if isinstance(oszfile, ZipFile) else ZipFile(oszfile)
     
-    def __open_content(self, filename: str, mode: str = "r") -> io:
+    def __open_content(self, filename: str, mode: str = 'r') -> io:
         return self.oszfile.open(filename, mode)
     
     def __list_content(self) -> Iterable[str]:
@@ -90,7 +90,7 @@ class DirArchive(Archive):
         assert os.path.isdir(path)
         self.path = path
     
-    def __open_content(self, filename: str, mode: str = "r") -> io:
+    def __open_content(self, filename: str, mode: str = 'r') -> io:
         return open(os.path.join(self.path, filename, mode))
     
     def __list_content(self) -> Iterable[str]:

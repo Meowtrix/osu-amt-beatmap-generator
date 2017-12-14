@@ -21,7 +21,7 @@ class AudioProcessError(Exception):
 
 def decode_audio(audio_file: io):
     """
-    Decode audio from file-like object `audio_file'.
+    Decode audio from file-like object `audio_file`.
     
     Parameters
     ----------
@@ -34,23 +34,22 @@ def decode_audio(audio_file: io):
     
     data = audio_file.read()
     if not BASS.BASS_Init(0):
-        raise AudioProcessError('BASS Error: Initialization failed.')
+        raise AudioProcessError("BASS Error: Initialization failed.")
     # Flags are Float, Mono, Decode, Prescan
     bass_stream = BASS.BASS_StreamCreateFile(
         True, data, 0, len(data), 0x220102)
     if bass_stream == 0:
-        raise AudioProcessError('BASS Error: Failed to create stream with error code {}.'
+        raise AudioProcessError("BASS Error: Failed to create stream with error code {}."
                                 .format(BASS.BASS_ErrorGetCode()))
     # Flag is Frequency
     freq = ctypes.c_float()
     BASS.BASS_ChannelGetAttribute(bass_stream, 0x1, ctypes.byref(freq))
     if abs(freq.value - 44100) > 1e-3:
-        raise AudioProcessError(
-            'Audio with non-44.1k sample rate not supported.')
+        raise AudioProcessError("Audio with non-44.1k sample rate not supported.")
     # Flag is Bytes
     decoded_len = BASS.BASS_ChannelGetLength(bass_stream, 0)
     if decoded_len == -1:
-        raise AudioProcessError('BASS Error: Failed to get decoded length with error code {}.'
+        raise AudioProcessError("BASS Error: Failed to get decoded length with error code {}."
                                 .format(BASS.BASS_ErrorGetCode()))
     result = numpy.require(numpy.zeros(decoded_len // 4),
                            dtype='f', requirements=['A', 'O', 'W', 'C'])
